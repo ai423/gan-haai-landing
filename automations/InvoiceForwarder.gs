@@ -50,6 +50,8 @@ const KNOWN_SUPPLIERS = [
   'notify@morning.co',
   'info@sabonmichal.co.il',
   'out.cardcom.co.il',
+  'invoice+statements@mail.anthropic.com',
+  'invoice+statements@vercel.com',
 ];
 
 /** שולחים שלעולם לא מעבירים — תשלומים פרטיים */
@@ -60,8 +62,13 @@ const EXCLUDED_SENDERS = [
 /** מסמך שנראה כמו חשבונית */
 const INVOICE_TERMS = /חשבונית|קבלה|מסמך ממוחשב|חתום דיגיטלית|אישור תשלום|דרישת תשלום|invoice|receipt|billing/i;
 
-/** מסמכים שאינם חשבונית ולכן לא מעבירים */
-const NOT_INVOICE_TERMS = /הצעת מחיר|הצעה מספר|quote|proposal|estimate|טיוטה/i;
+/**
+ * מסמכים שאינם חשבונית ולכן לא מעבירים.
+ * "אישור קבלת" / "נקלטו" מסננים את הודעות אישור הקליטה של מייבן —
+ * הן מגיעות מספק מוכר ומזכירות מסמכי הוצאות, אבל הן דיווח על קליטה
+ * ולא חשבונית, והחזרתן למייבן היא רעש.
+ */
+const NOT_INVOICE_TERMS = /הצעת מחיר|הצעה מספר|quote|proposal|estimate|טיוטה|אישור קבלת|נקלטו/i;
 
 /** חשבונית יוצאת שהעסק הנפיק ללקוח — כבר קיימת במערכת ההנפקה */
 const OUTGOING_INVOICE = /מ-\s*גורדון יזמות|מ-\s*Gr8Minds/i;
