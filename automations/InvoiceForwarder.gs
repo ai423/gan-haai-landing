@@ -50,8 +50,10 @@ const KNOWN_SUPPLIERS = [
   'notify@morning.co',
   'info@sabonmichal.co.il',
   'out.cardcom.co.il',
-  'invoice+statements@mail.anthropic.com',
-  'invoice+statements@vercel.com',
+  // קבלות שנשלחות דרך Stripe — Anthropic, Vercel, Render וכל SaaS אחר.
+  // Stripe שולח מהתבנית הזו עבור כל הספקים, ולכן שירות חדש נקלט לבד
+  // בלי עריכה. המשמעות: כל קבלת Stripe שתגיע לתיבה תועבר אוטומטית.
+  'invoice+statements@',
 ];
 
 /** שולחים שלעולם לא מעבירים — תשלומים פרטיים */
