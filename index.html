@@ -633,13 +633,14 @@
     e.preventDefault();
     if(!f.reportValidity())return;
     var btn=f.querySelector('button');btn.disabled=true;btn.textContent='שולח...';
-    var data={_subject:'ליד חדש מדף הנחיתה של גן האי'};
+    var data={access_key:'c368e35b-18a6-406e-8d49-f16b4f05d6fa',subject:'ליד חדש מדף הנחיתה של גן האי',from_name:'גן האי - דף נחיתה'};
     new FormData(f).forEach(function(v,k){data[k]=v});
-    fetch('https://formsubmit.co/ajax/benelrom@gmail.com',{
+    fetch('https://api.web3forms.com/submit',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify(data)
-    }).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(){
+    }).then(function(r){return r.json()}).then(function(j){
+      if(!j.success)throw 0;
       f.querySelectorAll('label,button').forEach(function(el){el.style.display='none'});
       m.className='form-msg ok';m.textContent='🌴 הפרטים התקבלו! נחזור אליכם ממש בקרוב.';
     }).catch(function(){
