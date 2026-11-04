@@ -298,6 +298,16 @@
   .mobile-cta .btn{flex:1;padding:14px}
   @media(max-width:720px){.mobile-cta{display:flex}body{padding-bottom:74px}}
 
+  /* floating WhatsApp */
+  .wa-float{
+    position:fixed;left:18px;bottom:18px;z-index:80;display:flex;align-items:center;gap:9px;
+    padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,#3ECf5b,#25b544);
+    color:#fff;font-weight:800;font-size:.98rem;text-decoration:none;
+    box-shadow:0 10px 28px -8px rgba(37,181,68,.55);transition:transform .2s;
+  }
+  .wa-float:hover{transform:translateY(-2px)}
+  @media(max-width:720px){.wa-float{bottom:calc(84px + env(safe-area-inset-bottom))}}
+
   /* reveal (progressive enhancement: hidden only when JS is active) */
   html.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
   html.js .reveal.in{opacity:1;transform:none}
@@ -343,7 +353,7 @@
 
       <div class="hero-cta reveal">
         <a href="#register" class="btn btn-primary btn-lg">✨ אשמח לקבל פרטים והרשמה</a>
-        <a href="https://wa.me/9720543484742" target="_blank" rel="noopener" class="btn btn-wa">💬 שאלה מהירה</a>
+        <a href="https://wa.me/9720543484742" target="_blank" rel="noopener" class="btn btn-wa">💬 לשיחה עם בן</a>
       </div>
       <div class="hero-note reveal">🔒 ללא התחייבות · נחזור אליכם עם כל הפרטים</div>
     </div>
@@ -582,6 +592,8 @@
 </footer>
 
 <!-- ===== STICKY MOBILE CTA ===== -->
+<a href="https://wa.me/9720543484742?text=%D7%94%D7%99%D7%99%20%D7%91%D7%9F%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%95%D7%93%20%D7%A2%D7%9C%20%D7%92%D7%9F%20%D7%94%D7%90%D7%99" target="_blank" rel="noopener" class="wa-float" aria-label="שיחה עם בן בוואטסאפ">💬 שיחה עם בן</a>
+
 <div class="mobile-cta">
   <a href="https://wa.me/9720543484742" target="_blank" rel="noopener" class="btn btn-wa">💬 וואטסאפ</a>
   <a href="#register" class="btn btn-primary">✨ להרשמה</a>
