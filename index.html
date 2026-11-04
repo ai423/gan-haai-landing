@@ -268,7 +268,17 @@
   .form-side li .ic{width:36px;height:36px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:var(--shadow-sm)}
   .form-embed{padding:30px 26px;display:flex;flex-direction:column;align-items:center;justify-content:center}
   .form-embed .embed-box{width:100%;max-width:360px}
-  .form-embed iframe{width:100%!important;min-height:430px;border:0;border-radius:16px;background:#fff}
+  .lead-form{width:100%;display:grid;gap:14px}
+  .lead-form label{font-weight:700;font-size:.92rem;color:var(--ink);display:grid;gap:6px}
+  .lead-form input,.lead-form select{
+    width:100%;padding:13px 15px;border:2px solid rgba(30,42,68,.1);border-radius:13px;
+    font:inherit;font-size:1rem;background:#FFFDF8;color:var(--ink);transition:border-color .15s;
+  }
+  .lead-form input:focus,.lead-form select:focus{outline:none;border-color:var(--coral)}
+  .lead-form button{border:0;cursor:pointer;width:100%;justify-content:center}
+  .form-msg{display:none;text-align:center;font-weight:700;padding:14px;border-radius:13px}
+  .form-msg.ok{display:block;background:#E8F9EC;color:#1d7a35}
+  .form-msg.err{display:block;background:#FDEBEA;color:#B3362B}
   .form-embed .reassure{font-size:.85rem;color:var(--ink-soft);text-align:center;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:6px}
 
   /* CTA band */
@@ -537,7 +547,23 @@
       </div>
       <div class="form-embed">
         <div class="embed-box">
-          <script type="text/javascript">document.write(unescape('%3Cif'+'rame%20width%3D%22300%22%20height%3D%22392%22%20style%3D%22max-width%3A100%25%22%20src%3D%22https%3A%2F%2Fembed.vp4.me%2FLandingPage%2C3805e299-0dfb-447d-b117-62f5975350a3%2C614858.aspx%3Fr%3D1009%22%20frameborder%3D%220%22%20allowfullscreen%20class%3D%22embediframe%22%3E%3C%2Fif'+'rame%3E'));</script>
+          <form class="lead-form" id="leadForm" novalidate>
+            <label>שם מלא
+              <input type="text" name="שם מלא" autocomplete="name" required>
+            </label>
+            <label>טלפון
+              <input type="tel" name="טלפון" autocomplete="tel" inputmode="tel" pattern="0[0-9\- ]{8,11}" required>
+            </label>
+            <label>סניף מועדף
+              <select name="סניף">
+                <option value="רעננה">רעננה</option>
+                <option value="הרצליה">הרצליה</option>
+                <option value="עדיין לא יודעים">עדיין לא יודעים</option>
+              </select>
+            </label>
+            <button type="submit" class="btn btn-primary btn-lg">✨ שמרו לנו מקום</button>
+            <div class="form-msg" id="formMsg"></div>
+          </form>
         </div>
         <div class="reassure">🔒 הפרטים שלכם מאובטחים ולא מועברים לאף גורם</div>
       </div>
@@ -600,7 +626,29 @@
 </div>
 
 <!-- Smoove embed core script -->
-<script type="text/javascript" src="https://embed.vp4.me/core/embd.min.js?v=20260726105717"></script>
+<script>
+(function(){
+  var f=document.getElementById('leadForm'),m=document.getElementById('formMsg');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!f.reportValidity())return;
+    var btn=f.querySelector('button');btn.disabled=true;btn.textContent='שולח...';
+    var data={_subject:'ליד חדש מדף הנחיתה של גן האי'};
+    new FormData(f).forEach(function(v,k){data[k]=v});
+    fetch('https://formsubmit.co/ajax/benelrom@gmail.com',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    }).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(){
+      f.querySelectorAll('label,button').forEach(function(el){el.style.display='none'});
+      m.className='form-msg ok';m.textContent='🌴 הפרטים התקבלו! נחזור אליכם ממש בקרוב.';
+    }).catch(function(){
+      btn.disabled=false;btn.textContent='✨ שמרו לנו מקום';
+      m.className='form-msg err';m.innerHTML='משהו השתבש - נסו שוב, או כתבו לנו <a href="https://wa.me/9720543484742" target="_blank" rel="noopener">בוואטסאפ</a>';
+    });
+  });
+})();
+</script>
 
 <script>
   // enable reveal styling only when JS runs (no-JS users see full content)
